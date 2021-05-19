@@ -1,0 +1,15 @@
+{% extends "eventlist/base.html" %}
+{% block content %}
+    {% for event in events %}
+        <event class="media content-section">
+            <div class="media-body">
+                <div class="event-metadata">
+                    <a class="mr-2" href="#">{{ event.owner }}</a>
+                    <small class="text-muted">{{ event.date }}</small>
+                </div>
+                <h2><a class="event-title" href="#">{{ event.title }}</a></h2>
+                <p class="event-content">{{ event.description }}</p>
+            </div>
+        </event>
+    {% endfor %}
+{%  endblock content %}
