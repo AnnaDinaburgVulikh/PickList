@@ -15,6 +15,11 @@ pytest = "*"
 
 django = "*"
 django-environ = "*"
+django-crispy-forms = "*"
+django-phonenumber-field = "*"
+pillow = "*"
+phonenumbers = "*"
+
 
 
 [requires]

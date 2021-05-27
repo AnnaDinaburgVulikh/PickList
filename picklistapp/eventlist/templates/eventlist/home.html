@@ -1,15 +1,16 @@
 {% extends "eventlist/base.html" %}
 {% block content %}
     {% for event in events %}
-        <event class="media content-section">
-            <div class="media-body">
-                <div class="event-metadata">
-                    <a class="mr-2" href="#">{{ event.owner }}</a>
-                    <small class="text-muted">{{ event.date }}</small>
+        <article class="d-flex content-section">
+            <img class="rounded-circle flex-shrink-0 article-img" src="{{ event.owner.profile.image.url }}">
+            <div class="flex-grow-1 ms-3">
+                <div class="article-metadata">
+                    <a class="me-2" href="#">{{ event.owner }}</a>
+                    <small class="text-muted">{{ event.date|date:"F d, Y" }}</small>
                 </div>
-                <h2><a class="event-title" href="#">{{ event.title }}</a></h2>
-                <p class="event-content">{{ event.description }}</p>
+                <h2><a class="article-title" href="#">{{ event.title }}</a></h2>
+                <p class="article-content">{{ event.description }}</p>
             </div>
-        </event>
+        </article>
     {% endfor %}
 {%  endblock content %}
