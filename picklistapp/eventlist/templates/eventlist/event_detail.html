@@ -1,0 +1,14 @@
+{% extends "eventlist/base.html" %}
+{% block content %}
+    <article class="d-flex content-section">
+        <img class="rounded-circle flex-shrink-0 article-img" src="{{ object.owner.profile.image.url }}">
+        <div class="flex-grow-1 ms-3">
+            <div class="article-metadata">
+                <a class="me-2" href="#">{{ object.owner }}</a>
+                <small class="text-muted">{{ object.date|date:"F d, Y" }}</small>
+            </div>
+            <h2 class="article-title">{{ object.title }}</h2>
+            <p class="article-content">{{ object.description }}</p>
+        </div>
+    </article>
+{%  endblock content %}

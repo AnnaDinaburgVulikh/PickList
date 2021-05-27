@@ -15,7 +15,7 @@ pytest = "*"
 
 django = "*"
 django-environ = "*"
-django-crispy-forms = "*"
+crispy-bootstrap5 = "*"
 django-phonenumber-field = "*"
 pillow = "*"
 phonenumbers = "*"

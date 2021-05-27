@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'eventlist',
     'users',
     'crispy_forms',
+    'crispy_bootstrap5',
     'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -134,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 LOGIN_REDIRECT_URL = 'event-home'
 LOGIN_URL = 'login'
