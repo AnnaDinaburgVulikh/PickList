@@ -1,11 +1,20 @@
 {% extends "eventlist/base.html" %}
 {% block content %}
     <article class="d-flex content-section">
-        <img class="rounded-circle flex-shrink-0 article-img" src="{{ object.owner.profile.image.url }}">
+        <div class="flex-shrink-0">
+            <img class="rounded-circle article-img" src="{{ object.owner.profile.image.url }}">
+        </div>
         <div class="flex-grow-1 ms-3">
             <div class="article-metadata">
-                <a class="me-2" href="#">{{ object.owner }}</a>
-                <small class="text-muted">{{ object.date|date:"F d, Y" }}</small>
+                <a class="me-2" href="{% url 'user-events' object.owner.username %}">{{ object.owner }}</a>
+                <small class="text-muted me-2">{{ object.date|date:"F d, Y" }}</small>
+                <small class="text-muted">at: {{ object.location }}</small>
+                {% if object.owner == user %}
+                    <div>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'event-update' object.id %}">Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'event-delete' object.id %}">Delete</a>
+                    </div>
+                {% endif %}
             </div>
             <h2 class="article-title">{{ object.title }}</h2>
             <p class="article-content">{{ object.description }}</p>

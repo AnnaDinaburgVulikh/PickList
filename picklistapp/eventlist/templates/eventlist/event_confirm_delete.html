@@ -1,0 +1,12 @@
+{% extends "eventlist/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <legend class="border-bottom mb-4">Delete Event</legend>
+            <h2>Are you sure you want to delete the event "{{ object.title }}"?</h2>
+            <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+            <a class="btn btn-outline-secondary" href="{% url 'event-detail' object.id %}">Cancel</a>
+        </form>
+    </div>
+{%  endblock content %}
