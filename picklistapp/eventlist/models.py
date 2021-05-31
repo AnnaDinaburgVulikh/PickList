@@ -4,6 +4,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+
 class Event(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -15,7 +16,7 @@ class Event(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('event-detail', kwargs={'pk':self.pk})    
+        return reverse('event-detail', kwargs={'pk': self.pk})
 
 
 class Invitees(models.Model):
@@ -34,6 +35,7 @@ class Items_to_bring(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Items_for_invitees(models.Model):
     invitee = models.ForeignKey(Invitees, on_delete=models.CASCADE)
