@@ -24,6 +24,10 @@ class Invitees(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     admin = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = ("Invitee")
+        verbose_name_plural = ("Invitees")
+
     def __str__(self):
         return self.invitee
 
@@ -31,7 +35,11 @@ class Invitees(models.Model):
 class Items_to_bring(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    amount = models.IntegerField
+    amount = models.IntegerField()
+
+    class Meta:
+        verbose_name = ("Item_to_bring")
+        verbose_name_plural = ("Items_to_bring")
 
     def __str__(self):
         return self.name
@@ -42,6 +50,10 @@ class Items_for_invitees(models.Model):
     item = models.ForeignKey(Items_to_bring, on_delete=models.CASCADE)
     amount = models.IntegerField
     purchased = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = ("Item_for_invitee")
+        verbose_name_plural = ("Items_for_invitees")
 
     def __str__(self):
         return self.invitee

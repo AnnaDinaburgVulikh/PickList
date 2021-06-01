@@ -1,3 +1,4 @@
+from django.forms.models import inlineformset_factory
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         UserPassesTestMixin)
@@ -7,10 +8,14 @@ from django.views.generic import (ListView,
                                   CreateView,
                                   UpdateView,
                                   DeleteView)
-from .models import Event
+from extra_views import (CreateWithInlinesView,
+                         UpdateWithInlinesView,
+                         InlineFormSetFactory)
+from .models import Event, Items_to_bring, Invitees
 import datetime
 
 
+# basic pages
 def home(request):
     context = {
         'events': Event.objects.all()
@@ -18,6 +23,11 @@ def home(request):
     return render(request, 'eventlist/home.html', context)
 
 
+def about(request):
+    return render(request, 'eventlist/about.html', {'title': 'About'})
+
+
+# Event views
 class EventListView(ListView):
     model = Event
     template_name = 'eventlist/home.html'
@@ -82,5 +92,27 @@ class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-def about(request):
-    return render(request, 'eventlist/about.html', {'title': 'About'})
+# Event list views
+class ItemInLine (InlineFormSetFactory):
+    model = Items_to_bring
+    fields = ['name', 'amount']
+
+
+class ItemListCreateView(CreateWithInlinesView):
+    model = Event
+    inlines = [ItemInLine]
+    fields = ['title', ]
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+
+# class EventListCreateView(LoginRequiredMixin, CreateView):
+#     event = Event.
+#     model = Event
+#     fields = ['title', 'description', 'date', 'location']
+
+#     def form_valid(self, form):
+#         form.instance.owner = self.request.user
+#         return super().form_valid(form)

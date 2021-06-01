@@ -1,0 +1,7 @@
+{% extends "eventlist/event_detail.html" %}
+{% block content %}
+    {% for formset in inlines %}
+        {{ formset }}
+    {% endfor %}
+    <button class="btn btn-outline-info mb-3" type="submit">Set Event</button>
+{%  endblock content %}

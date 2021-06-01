@@ -17,8 +17,10 @@ django = "*"
 django-environ = "*"
 crispy-bootstrap5 = "*"
 django-phonenumber-field = "*"
+django-extra-views = "*"
 pillow = "*"
 phonenumbers = "*"
+
 
 
 
