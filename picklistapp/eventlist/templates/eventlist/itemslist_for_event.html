@@ -1,0 +1,45 @@
+{% extends "eventlist/event_detail.html" %}
+{% block extended_content %}
+    <article class="d-flex content-section">
+        <div class="content">
+            <h2 class="article-title">Event items  
+                
+            </h2>
+            <form action="" method="post" >
+                {% csrf_token %}
+                    <div class="row g-2 mb-2">
+                        <div class="col-md-8 form-floating">
+                            <input type="text" id="description" class="form-control" name="description" required>
+                            <label for="description">Item Description</label>
+                        </div>
+                        <div class="col-md form-floating">
+                            <input type="text" id="amount" class="form-control" name="amount" required>
+                            <label for="amount">Item Amount</label>
+                        </div>
+                    </div>
+                    <div class="align-items-center">
+                        <button class="btn-secondary btn-sm mt-1 mb-1" name="itemAdd" type="submit"><i class="fas fa-plus icon"></i> Add item</button>
+                        <button class="btn-danger btn-sm mt-1 mb-1" name="itemDelete" formnovalidate="" type="submit" onclick="MakeCheckList()"><i class="fas fa-trash icon"></i> Delete Items</button>            
+                    </div>
+                
+                
+                <ul class="list-group">
+                    {% for item in items %}
+                        <label class="list-group-item" for="{{ item.id }}">
+                            <input type="checkbox" class="form-check-input me-1" name="checkedbox" id="{{ item.id }}" value="{{ item.id }}">
+                        <span class="complete-">{{ item.name }} X {{ item.amount }}</span></label>
+                    {% endfor %}
+                </ul>
+                <input type="hidden" name="checkedboxlist" id="checkedboxlist">
+            </form>
+        </div>
+    </article>
+{% endblock extended_content %}
+{% block scripts%}
+    <script>
+        function MakeCheckList(){
+        checkedList = $('input:checkbox:checked[name="checkedbox"]').map(function() { return $(this).val(); }).get();
+        $('input#checkedboxlist').val(checkedList);
+        }
+    </script>
+{% endblock scripts%}

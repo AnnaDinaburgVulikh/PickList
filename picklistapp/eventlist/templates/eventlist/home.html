@@ -1,18 +1,7 @@
 {% extends "eventlist/base.html" %}
 {% block content %}
     {% for event in events %}
-        <article class="d-flex content-section">
-            <img class="rounded-circle flex-shrink-0 article-img" src="{{ event.owner.profile.image.url }}">
-            <div class="flex-grow-1 ms-3">
-                <div class="article-metadata">
-                    <a class="me-2" href="{% url 'user-events' event.owner.username %}">{{ event.owner }}</a>
-                    <small class="text-muted">{{ event.date|date:"F d, Y" }}</small>
-                    <small class="text-muted">at: {{ event.location }}</small>
-                </div>
-                <h2><a class="article-title" href="{% url 'event-detail' event.id %}">{{ event.title }}</a></h2>
-                <p class="article-content">{{ event.description }}</p>
-            </div>
-        </article>
+        {% include "eventlist/base_event.html" %}
     {% endfor %}
     {% if is_paginated %}
 

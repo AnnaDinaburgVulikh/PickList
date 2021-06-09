@@ -1,5 +1,4 @@
-from django.forms.models import inlineformset_factory
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         UserPassesTestMixin)
 from django.contrib.auth.models import User
@@ -8,9 +7,6 @@ from django.views.generic import (ListView,
                                   CreateView,
                                   UpdateView,
                                   DeleteView)
-from extra_views import (CreateWithInlinesView,
-                         UpdateWithInlinesView,
-                         InlineFormSetFactory)
 from .models import Event, Items_to_bring, Invitees
 import datetime
 
@@ -54,7 +50,10 @@ class UserEventListView(ListView):
 
 
 class EventDetailView(DetailView):
-    model = Event
+    template_name = 'eventlist/itemslist_for_event.html'
+
+    def get_object(self):
+        return get_object_or_404(Event, pk=self.request.event.id)
 
 
 class EventCreateView(LoginRequiredMixin, CreateView):
@@ -93,26 +92,26 @@ class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 # Event list views
-class ItemInLine (InlineFormSetFactory):
-    model = Items_to_bring
-    fields = ['name', 'amount']
+def ItemslistForEvent(request, pk):
+    event_id = pk
+    item_event = Event.objects.filter(pk=event_id)[0]
+    items_to_bring = Items_to_bring.objects.filter(event=item_event)
+    # items_to_bring = Items_to_bring.objects.all()
+    if request.method == "POST":
+        if "itemAdd" in request.POST:
+            name = request.POST["description"]
+            amount = int(request.POST["amount"])
+            itemsList = Items_to_bring(event=item_event,
+                                       name=name,
+                                       amount=amount)
+            itemsList.save()
+            return redirect(request.path_info)
 
-
-class ItemListCreateView(CreateWithInlinesView):
-    model = Event
-    inlines = [ItemInLine]
-    fields = ['title', ]
-
-    def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
-
-
-# class EventListCreateView(LoginRequiredMixin, CreateView):
-#     event = Event.
-#     model = Event
-#     fields = ['title', 'description', 'date', 'location']
-
-#     def form_valid(self, form):
-#         form.instance.owner = self.request.user
-#         return super().form_valid(form)
+        if "itemDelete" in request.POST:
+            checkedlist = request.POST["checkedboxlist"].split(",")
+            for item_id in checkedlist:
+                itemsList = Items_to_bring.objects.get(id=int(item_id))
+                itemsList.delete()
+    return render(request,
+                  "eventlist/itemslist_for_event.html",
+                  {"event": item_event, "items": items_to_bring})

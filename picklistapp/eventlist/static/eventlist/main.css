@@ -82,3 +82,75 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+
+/* items styles */
+.itemList {
+  list-style: none;
+  padding: 0 20px;
+}
+
+.item {
+  border-top: 1px solid #e5e5e5;
+  padding: 15px 0;
+  color: #777;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.itemList .item:nth-child(even) {
+  background: #fcfcfc;
+}
+
+.itemCheckbox {
+  margin-right: 1em;
+}
+
+.complete-true {
+  text-decoration:  line-through;
+  color: #bebebe;
+}
+
+.itemList {
+  color: #95a5a6;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: block;
+  margin-left: 41px;
+}
+
+/* custom checkboxes */
+.itemCheckbox {
+  -webkit-appearance: none;
+          appearance: none;
+  -webkit-transition: all 0.3s;
+          transition: all 0.3s;
+  display: inline-block;
+  cursor: pointer;
+  width: 19px;
+  height: 19px;
+  vertical-align: middle;
+}
+
+.itemCheckbox:focus {
+  outline: none;
+}
+
+.itemCheckbox:before, .itemCheckbox:checked:before {
+  font-family: 'FontAwesome';
+  color: #444;
+  font-size: 20px;
+  -webkit-transition: all 0.3s;
+          transition: all 0.3s;
+
+}
+
+.itemCheckbox:before {
+  content: '\f096';
+}
+
+.itemCheckbox:checked:before {
+  content: '\f14a';
+  color: #16a085;
+}

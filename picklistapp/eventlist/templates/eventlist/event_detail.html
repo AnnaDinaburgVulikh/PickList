@@ -1,23 +1,25 @@
 {% extends "eventlist/base.html" %}
 {% block content %}
-    <article class="d-flex content-section">
+    {% include "eventlist/base_event.html" with update=True %}
+    {% comment %} <article class="d-flex content-section">
         <div class="flex-shrink-0">
-            <img class="rounded-circle article-img" src="{{ object.owner.profile.image.url }}">
+            <img class="rounded-circle article-img" src="{{ event.owner.profile.image.url }}"><br>
+            <a class="me-2 align-middle" href="{% url 'user-events' event.owner.username %}">{{ event.owner }}</a>
         </div>
         <div class="flex-grow-1 ms-3">
             <div class="article-metadata">
-                <a class="me-2" href="{% url 'user-events' object.owner.username %}">{{ object.owner }}</a>
-                <small class="text-muted me-2">{{ object.date|date:"F d, Y" }}</small>
-                <small class="text-muted">at: {{ object.location }}</small>
-                {% if object.owner == user %}
+                <small class="text-muted me-2">{{ event.date|date:"H:i, F d, Y" }}</small><br>
+                <small class="text-muted">{{ event.location }}</small>
+                {% if event.owner == user %}
                     <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'event-update' object.id %}">Update</a>
-                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'event-delete' object.id %}">Delete</a>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'event-update' event.id %}"><i class="fas fa-pencil-alt"></i> Update</a>
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'event-delete' event.id %}"><i class="fas fa-trash icon"></i> Delete</a>
                     </div>
                 {% endif %}
             </div>
-            <h2 class="article-title">{{ object.title }}</h2>
-            <p class="article-content">{{ object.description }}</p>
+            <h2 class="article-title">{{ event.title }}</h2>
+            <p class="article-content">{{ event.description }}</p>
         </div>
-    </article>
-{%  endblock content %}
+    </article> {% endcomment %}
+    {% block extended_content %}{% endblock extended_content %}
+{% endblock content %}
